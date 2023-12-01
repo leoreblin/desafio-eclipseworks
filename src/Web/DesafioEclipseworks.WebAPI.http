@@ -1,0 +1,6 @@
+@DesafioEclipseworks.WebAPI_HostAddress = http://localhost:5275
+
+GET {{DesafioEclipseworks.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
