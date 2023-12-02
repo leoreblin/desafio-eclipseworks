@@ -1,4 +1,4 @@
-﻿namespace DesafioEclipseworks.WebAPI.Domain.Entities
+﻿namespace DesafioEclipseworks.WebAPI.Domain.Enum
 {
     public enum Status
     {

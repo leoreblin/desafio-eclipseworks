@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,13 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Commands\Tasks\" />
-    <Folder Include="Application\Queries\Projects\" />
-    <Folder Include="Application\Queries\Tasks\" />
+    <Folder Include="Application\Projects\Queries\" />
+    <Folder Include="Application\Tasks\" />
     <Folder Include="Domain\Repositories\" />
     <Folder Include="Extensions\" />
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Data\EntityConfigurations\" />
     <Folder Include="Data\Repositories\" />
   </ItemGroup>
 

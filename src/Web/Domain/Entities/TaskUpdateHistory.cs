@@ -1,15 +1,15 @@
-﻿namespace DesafioEclipseworks.WebAPI.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DesafioEclipseworks.WebAPI.Domain.Entities
 {
     public class TaskUpdateHistory : BaseEntity
     {
         public Guid TaskId { get; set; }
 
-        public Guid UserId { get; set; }
+        public Guid UpdatedBy { get; set; }
 
-        public string TaskDetails { get; set; } = string.Empty;
+        public DateTime UpdatedDate { get; set; }
 
-        public string UserComment { get; set; } = string.Empty;
-
-        public string UpdateInformation { get; set; } = string.Empty;
+        public string Comment { get; set; } = default!;
     }
 }

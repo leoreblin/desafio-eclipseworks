@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace DesafioEclipseworks.WebAPI.Domain.Shared
+﻿namespace DesafioEclipseworks.WebAPI.Domain.Shared
 {
     public class Result<TResult>
     {
@@ -8,7 +6,7 @@ namespace DesafioEclipseworks.WebAPI.Domain.Shared
 
         public bool IsSuccess { get; set; }
         public bool IsFailure => !IsSuccess;
-        public string? ErrorMessage { get; set; } = string.Empty;
+        public Error Error { get; set; } = Error.None;
 
         private Result(TResult? value, bool isSuccess)
         {
@@ -16,16 +14,41 @@ namespace DesafioEclipseworks.WebAPI.Domain.Shared
             IsSuccess = isSuccess;
         }
 
-        private Result(string errorMessage, bool isSuccess)
+        private Result(Error error, bool isSuccess)
         {
             Value = default;
             IsSuccess = isSuccess;
-            ErrorMessage = errorMessage;
+            Error = error;
         }
 
+        public static Result<TResult> Success(TResult value) => new(value, true);
+
+        public static Result<TResult> Failure(Error error) => new(error, false);
+
         public static implicit operator Result<TResult>(TResult? value) => new(value, true);
-        public static implicit operator Result<TResult>(string errorMessage) => new(errorMessage, false);
+        public static implicit operator Result<TResult>(Error error) => new(error, false);
     }
 
-    public class Result { }
+    public class Result
+    {
+        private Result(bool isSuccess, Error error)
+        {
+            if (IsInvalidError(isSuccess, error))
+            {
+                throw new ArgumentException("Invalid error", nameof(error));
+            }
+
+            IsSuccess = isSuccess;
+            Error = error;
+        }
+
+        public bool IsSuccess { get; set; }
+        public bool IsFailure => !IsSuccess;
+        public Error Error { get; }
+
+        public static Result Success() => new(true, Error.None);
+        public static Result Failure(Error error) => new(false, error);
+
+        private static bool IsInvalidError(bool isSuccess, Error error) => isSuccess && error != Error.None || !isSuccess && error == Error.None;
+    }
 }
