@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DesafioEclipseworks.WebAPI.Abstractions.Messaging
 {
-    public interface ICommand : IRequest<Result>
+    public interface IQuery<TResult> : IRequest<TResult>
     {
     }
 }

@@ -25,12 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Projects\Queries\" />
-    <Folder Include="Application\Tasks\" />
-    <Folder Include="Domain\Repositories\" />
+    <Folder Include="Application\Tasks\GetAll\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Data\Migrations\" />
-    <Folder Include="Data\Repositories\" />
   </ItemGroup>
 
 </Project>

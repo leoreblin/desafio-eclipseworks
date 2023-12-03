@@ -1,4 +1,7 @@
-using DesafioEclipseworks.WebAPI.Data;
+using DesafioEclipseworks.WebAPI.Abstractions.Data;
+using DesafioEclipseworks.WebAPI.Domain.Repositories;
+using DesafioEclipseworks.WebAPI.Infrastructure.Data;
+using DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -37,9 +40,21 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(configuration["ConnectionString"]);
 });
 
+builder.Services
+    .AddTransient<IProjectRepository, ProjectRepository>()
+    .AddTransient<ITaskRepository, TaskRepository>()
+    .AddTransient<IUnitOfWork, UnitOfWork>();
+
 var app = builder.Build();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    await AppContextSeed.SeedAsync(services);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

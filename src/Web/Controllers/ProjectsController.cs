@@ -1,5 +1,5 @@
-﻿using DesafioEclipseworks.WebAPI.Application.Projects.Commands;
-using DesafioEclipseworks.WebAPI.DTO;
+﻿using DesafioEclipseworks.WebAPI.Application.Projects.Create;
+using DesafioEclipseworks.WebAPI.Application.Projects.GetAll;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -9,34 +9,51 @@ namespace DesafioEclipseworks.WebAPI.Controllers
     public sealed class ProjectsController : ApiController
     {
         public ProjectsController(ISender sender) : base(sender)
-        {
-            
+        {   
         }
 
-        [HttpGet("api/v1/projects")]
-        public async Task<IActionResult> GetAllUserProjects()
+        [HttpGet("api/v1/users/{userId}/projects")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> GetAllProjects(Guid userId)
         {
-            return Ok();
+            var query = new GetAllProjectsQuery(userId);
+
+            var result = await Sender.Send(query);
+
+            return Ok(result.Value);
         }
 
-        [HttpPost("api/v1/projects/create")]
+        [HttpPost("api/v1/users/{userId}/projects/create")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> CreateProject(
-            CreateProjectRequest request,
+            Guid userId,
+            string projectName,
             CancellationToken cancellationToken)
         {
-            var command = new CreateProjectCommand(request.ProjectName);
+            var request = new CreateProjectCommand(userId, projectName);
 
-            var result = await Sender.Send(command, cancellationToken);
+            var result = await Sender.Send(request, cancellationToken);
 
             if (result.IsFailure)
             {
                 return BadRequest(result.Error);
             }
 
-            return Ok(result);
+            return Ok();
+        }
+
+        [HttpDelete("api/v1/users/projects/{projectId}/remove")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> RemoveProject(
+            Guid projectId,
+            CancellationToken cancellationToken)
+        {
+            return Ok();
         }
     }
 }
