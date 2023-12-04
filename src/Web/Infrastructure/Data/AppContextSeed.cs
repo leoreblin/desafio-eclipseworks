@@ -7,7 +7,7 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data
 {
     public static class AppContextSeed
     {
-        private static readonly Guid _defaultUserId = new("44f596df-a5e2-4741-b047-0a0b5a4f26ba");
+        private static readonly Guid _managerUserId = new("44f596df-a5e2-4741-b047-0a0b5a4f26ba");
         private static readonly Guid _defaultProjectId = new("d6955201-8b1d-e811-80c2-000d3ab14b1a");
 
         public async static Task SeedAsync(IServiceProvider serviceProvider)
@@ -22,7 +22,7 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data
             var context = new AppDbContext(
                 serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>());
 
-            await SeedDefaultUserAsync(context);
+            await SeedUsersAsync(context);
 
             await SeedDefaultProjectAsync(context);
 
@@ -31,14 +31,14 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data
             await context.SaveChangesAsync();
         }
 
-        private static async Task SeedDefaultUserAsync(AppDbContext context)
+        private static async Task SeedUsersAsync(AppDbContext context)
         {
             if (context.Users.Any())
             {
                 return;
             }
 
-            User manager = new("Gerente", UserRole.Manager) { Id = _defaultUserId };
+            User manager = new("Gerente", UserRole.Manager) { Id = _managerUserId };
             User common = new("Usuário Comum", UserRole.Common);
 
             await context.Users.AddRangeAsync(new List<User> { manager, common });
@@ -51,7 +51,7 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data
                 return;
             }
 
-            Project project = new(_defaultUserId, "Projeto Inicial") { Id = _defaultProjectId };
+            Project project = new(_managerUserId, "Projeto Inicial") { Id = _defaultProjectId };
 
             await context.Projects.AddAsync(project);
         }
@@ -67,17 +67,17 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data
             {
                 new TaskEntity(
                     title: "Tarefa A", details: "Detalhes da Tarefa A",
-                    dueDate: DateTime.UtcNow.AddDays(20), status: Status.Pending,
+                    dueDate: DateOnly.FromDateTime(DateTime.UtcNow.AddDays(20)), status: Status.Pending,
                     priority: Priority.Low, projectId: _defaultProjectId),
 
                 new TaskEntity(
                     title: "Tarefa B", details: "Detalhes da Tarefa B",
-                    dueDate: DateTime.UtcNow.AddDays(10), status: Status.InProgress,
+                    dueDate: DateOnly.FromDateTime(DateTime.UtcNow.AddDays(10)), status: Status.InProgress,
                     priority: Priority.Medium, projectId: _defaultProjectId),
 
                 new TaskEntity(
                     title: "Tarefa C", details: "Detalhes da Tarefa C",
-                    dueDate: DateTime.UtcNow.AddDays(15), status: Status.Done,
+                    dueDate: DateOnly.FromDateTime(DateTime.UtcNow.AddDays(20)), status: Status.Done,
                     priority: Priority.High, projectId: _defaultProjectId),
             };
 

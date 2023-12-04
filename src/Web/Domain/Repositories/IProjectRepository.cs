@@ -9,5 +9,7 @@ namespace DesafioEclipseworks.WebAPI.Domain.Repositories
         Task<List<Project>?> GetAllUserProjectsAsync(Guid userId);
 
         Task CreateProjectAsync(Project project);
+
+        void RemoveProject(Project project);
     }
 }

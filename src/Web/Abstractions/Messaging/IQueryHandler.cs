@@ -1,5 +1,4 @@
-﻿using DesafioEclipseworks.WebAPI.Domain.Shared;
-using MediatR;
+﻿using MediatR;
 
 namespace DesafioEclipseworks.WebAPI.Abstractions.Messaging
 {

@@ -11,12 +11,14 @@ namespace DesafioEclipseworks.WebAPI.Application.Tasks.Update
     public class UpdateTaskCommandHandler : ICommandHandler<UpdateTaskCommand>
     {
         private readonly ITaskRepository _taskRepository;
+        private readonly ITaskUpdateHistoryRepository _taskUpdateHistoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateTaskCommandHandler(ITaskRepository taskRepository, IUnitOfWork unitOfWork)
+        public UpdateTaskCommandHandler(ITaskRepository taskRepository, IUnitOfWork unitOfWork, ITaskUpdateHistoryRepository taskUpdateHistoryRepository)
         {
             _taskRepository = taskRepository;
             _unitOfWork = unitOfWork;
+            _taskUpdateHistoryRepository = taskUpdateHistoryRepository;
         }
 
         public async Task<Result> Handle(
@@ -29,24 +31,26 @@ namespace DesafioEclipseworks.WebAPI.Application.Tasks.Update
             {
                 return TaskErrors.TaskDoesNotExist(request.TaskId);
             }
+             
+            TaskEntity updatedTask = new(request.Title, request.Details,
+                DateOnly.FromDateTime(request.DueDate), request.Status, taskFromDb.Priority, taskFromDb.ProjectId);
 
-            taskFromDb.DueDate = request.DueDate;
+            updatedTask.Id = taskFromDb.Id;
+
+            var updatedProperties = ObjectComparer.GetChangedProperties(taskFromDb, updatedTask);
+
+            TaskUpdateHistory history = new(
+                updatedTask.Id, request.UserId, DateTime.UtcNow,
+                $"Campos alterados: {string.Join(", ", updatedProperties)}");
+
+            await _taskUpdateHistoryRepository.CreateHistoryAsync(history);
+
+            taskFromDb.DueDate = DateOnly.FromDateTime(request.DueDate);
             taskFromDb.Status = request.Status;
             taskFromDb.Title = request.Title;
             taskFromDb.Details = request.Details;
-             
-            TaskEntity newTask = new(request.Title, request.Details,
-                request.DueDate, request.Status, taskFromDb.Priority, taskFromDb.Id);
 
-            _taskRepository.UpdateTaskAsync(taskFromDb);
-
-            var updatedProperties = ObjectComparer.GetChangedProperties(taskFromDb, newTask);
-
-            TaskUpdateHistory history = new(
-                newTask.Id, request.UserId, DateTime.UtcNow,
-                $"Campos alterados: {string.Join(", ", updatedProperties)}");
-
-            //TODO: Save task update history to the database
+            _taskRepository.UpdateTask(taskFromDb);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

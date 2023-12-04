@@ -1,5 +1,6 @@
 using DesafioEclipseworks.WebAPI.Abstractions.Data;
 using DesafioEclipseworks.WebAPI.Domain.Repositories;
+using DesafioEclipseworks.WebAPI.Domain.Services;
 using DesafioEclipseworks.WebAPI.Infrastructure.Data;
 using DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services
     .AddTransient<IProjectRepository, ProjectRepository>()
     .AddTransient<ITaskRepository, TaskRepository>()
-    .AddTransient<IUnitOfWork, UnitOfWork>();
+    .AddTransient<ITaskUpdateHistoryRepository, TaskUpdateHistoryRepository>()
+    .AddTransient<IUnitOfWork, UnitOfWork>()
+    .AddScoped<ReportService>();
 
 var app = builder.Build();
 

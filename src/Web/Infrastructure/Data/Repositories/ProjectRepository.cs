@@ -33,5 +33,10 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories
                 .Include(p => p.Tasks)
                 .FirstOrDefaultAsync();
         }
+
+        public void RemoveProject(Project project)
+        {
+            _context.Remove(project);
+        }
     }
 }

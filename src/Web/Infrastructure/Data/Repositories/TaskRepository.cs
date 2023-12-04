@@ -18,6 +18,14 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories
             await _context.AddAsync(task);
         }
 
+        public async Task<List<TaskEntity>?> GetAllCompletedTasksAsync()
+        {
+            return await _context.Tasks
+                .AsNoTracking()
+                .Where(t => t.Status == Status.Done)
+                .ToListAsync();
+        }
+
         public async Task<List<TaskEntity>?> GetAllTasksAsync()
         {
             return await _context.Tasks
@@ -40,12 +48,12 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public void RemoveTaskAsync(TaskEntity task)
+        public void RemoveTask(TaskEntity task)
         {
             _context.Remove(task);
         }
 
-        public void UpdateTaskAsync(TaskEntity task)
+        public void UpdateTask(TaskEntity task)
         {
             _context.Update(task);
         }

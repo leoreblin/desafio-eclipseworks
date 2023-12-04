@@ -1,6 +1,5 @@
 ﻿using DesafioEclipseworks.WebAPI.Domain.Entities.Projects;
 using DesafioEclipseworks.WebAPI.Domain.Entities.Tasks;
-using DesafioEclipseworks.WebAPI.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -37,7 +36,7 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data.EntityConfigurations
 
             builder
                 .Property(t => t.DueDate)
-                .HasColumnType("datetime")
+                .HasColumnType("date")
                 .IsRequired();
 
             builder

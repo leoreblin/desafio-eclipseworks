@@ -1,27 +1,24 @@
 ﻿using DesafioEclipseworks.WebAPI.Abstractions.Messaging;
 using DesafioEclipseworks.WebAPI.Domain.Entities.Tasks;
+using DesafioEclipseworks.WebAPI.DTO;
 
 namespace DesafioEclipseworks.WebAPI.Application.Tasks.Create
 {
     public sealed record CreateTaskCommand(
         Guid ProjectId,
-        string Title,
-        string Details,
-        DateTime DueDate,
-        Status Status,
-        Priority Priority) : ICommand
+        CreateTaskRequest Request) : ICommand
     {
-        public static implicit operator TaskEntity(CreateTaskCommand request)
+        public static implicit operator TaskEntity(CreateTaskCommand command)
         {
-            ArgumentNullException.ThrowIfNull(request);
+            ArgumentNullException.ThrowIfNull(command);
 
             return new TaskEntity(
-                title: request.Title,
-                details: request.Details,
-                dueDate: request.DueDate,
-                status: request.Status,
-                priority: request.Priority,
-                projectId: request.ProjectId);
+                title: command.Request.Title,
+                details: command.Request.Details,
+                dueDate: DateOnly.FromDateTime(command.Request.DueDate),
+                status: Status.Pending,
+                priority: command.Request.Priority,
+                projectId: command.ProjectId);
         }
     }
 }

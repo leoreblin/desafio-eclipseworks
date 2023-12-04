@@ -31,7 +31,7 @@
 
     public class Result
     {
-        private Result(bool isSuccess, Error error)
+        private Result(bool isSuccess, Error error, Guid? entityId = null)
         {
             if (IsInvalidError(isSuccess, error))
             {
@@ -40,12 +40,15 @@
 
             IsSuccess = isSuccess;
             Error = error;
+            EntityId = entityId;
         }
 
         public bool IsSuccess { get; set; }
         public bool IsFailure => !IsSuccess;
         public Error Error { get; }
+        public Guid? EntityId { get; }
 
+        public static Result Success(Guid id) => new(true, Error.None, id);
         public static Result Success() => new(true, Error.None);
         public static Result Failure(Error error) => new(false, error);
 

@@ -35,7 +35,7 @@ namespace DesafioEclipseworks.WebAPI.Application.Projects.Create
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            return Result.Success(newProject.Id);
         }
     }
 }

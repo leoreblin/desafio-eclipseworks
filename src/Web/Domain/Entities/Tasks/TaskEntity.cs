@@ -6,12 +6,12 @@ namespace DesafioEclipseworks.WebAPI.Domain.Entities.Tasks
     {
         public string Title { get; set; } = default!;
         public string Details { get; set; } = default!;
-        public DateTime DueDate { get; set; }
+        public DateOnly DueDate { get; set; }
         public Status Status { get; set; }
         public Priority Priority { get; }
         public Guid ProjectId { get; set; }
 
-        public TaskEntity(string title, string details, DateTime dueDate, Status status, Priority priority, Guid projectId)
+        public TaskEntity(string title, string details, DateOnly dueDate, Status status, Priority priority, Guid projectId)
         {
             Title = title;
             Details = details;

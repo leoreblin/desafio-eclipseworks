@@ -5,47 +5,42 @@ using DesafioEclipseworks.WebAPI.Domain.Repositories;
 using DesafioEclipseworks.WebAPI.Domain.Shared;
 using DesafioEclipseworks.WebAPI.Infrastructure.Errors;
 
-namespace DesafioEclipseworks.WebAPI.Application.Tasks.Create
+namespace DesafioEclipseworks.WebAPI.Application.Projects.Remove
 {
-    public class CreateTaskCommandHandler : ICommandHandler<CreateTaskCommand>
+    public class RemoveProjectCommandHandler : ICommandHandler<RemoveProjectCommand>
     {
-        private readonly ITaskRepository _taskRepository;
         private readonly IProjectRepository _projectRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateTaskCommandHandler(
-            ITaskRepository taskRepository,
-            IProjectRepository projectRepository,
-            IUnitOfWork unitOfWork)
+        public RemoveProjectCommandHandler(IProjectRepository projectRepository, IUnitOfWork unitOfWork)
         {
-            _taskRepository = taskRepository;
             _projectRepository = projectRepository;
             _unitOfWork = unitOfWork;
         }
 
         public async Task<Result> Handle(
-            CreateTaskCommand request,
+            RemoveProjectCommand request,
             CancellationToken cancellationToken)
         {
             var projectFromDb = await _projectRepository.GetProjectAsync(request.ProjectId);
 
             if (projectFromDb is null)
             {
-                return TaskErrors.ProjectDoesNotExist(request.ProjectId);
+                return ProjectErrors.ProjectDoesNotExist(request.ProjectId);
             }
 
-            if (projectFromDb.Tasks.Count == 20)
+            var projectTasks = projectFromDb.Tasks;
+
+            if (projectTasks.Any(t => t.Status == Status.Pending))
             {
-                return TaskErrors.ProjectWithTaskLimitMaximum(request.ProjectId);
+                return ProjectErrors.ProjectWithPendingTasks(request.ProjectId);
             }
 
-            TaskEntity newTask = request;
-
-            await _taskRepository.CreateTaskAsync(newTask);
+            _projectRepository.RemoveProject(projectFromDb);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success(newTask.Id);
+            return Result.Success();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DesafioEclipseworks.WebAPI.Application.Projects.Create;
 using DesafioEclipseworks.WebAPI.Application.Projects.GetAll;
+using DesafioEclipseworks.WebAPI.Application.Projects.Remove;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -42,7 +43,7 @@ namespace DesafioEclipseworks.WebAPI.Controllers
                 return BadRequest(result.Error);
             }
 
-            return Ok();
+            return Ok(result.EntityId);
         }
 
         [HttpDelete("api/v1/users/projects/{projectId}/remove")]
@@ -53,6 +54,15 @@ namespace DesafioEclipseworks.WebAPI.Controllers
             Guid projectId,
             CancellationToken cancellationToken)
         {
+            var command = new RemoveProjectCommand(projectId);
+
+            var result = await Sender.Send(command, cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
+
             return Ok();
         }
     }
