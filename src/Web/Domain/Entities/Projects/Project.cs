@@ -7,7 +7,7 @@ namespace DesafioEclipseworks.WebAPI.Domain.Entities.Projects
     {
         public string Name { get; } = default!;
 
-        public IReadOnlyCollection<TaskEntity> Tasks = default!;
+        public IReadOnlyCollection<TaskEntity> Tasks { get; set; } = default!;
 
         public Guid UserId { get; }
 

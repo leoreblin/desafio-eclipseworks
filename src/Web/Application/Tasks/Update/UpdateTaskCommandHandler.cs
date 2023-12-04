@@ -31,6 +31,11 @@ namespace DesafioEclipseworks.WebAPI.Application.Tasks.Update
             {
                 return TaskErrors.TaskDoesNotExist(request.TaskId);
             }
+
+            if (request.DueDate < DateTime.Now)
+            {
+                return TaskErrors.InvalidDueDate;
+            }
              
             TaskEntity updatedTask = new(request.Title, request.Details,
                 DateOnly.FromDateTime(request.DueDate), request.Status, taskFromDb.Priority, taskFromDb.ProjectId);

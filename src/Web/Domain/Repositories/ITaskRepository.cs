@@ -10,7 +10,7 @@ namespace DesafioEclipseworks.WebAPI.Domain.Repositories
 
         Task<List<TaskEntity>?> GetAllCompletedTasksAsync();
 
-        Task CreateTaskAsync(TaskEntity task);
+        Task AddTaskAsync(TaskEntity task);
 
         void UpdateTask(TaskEntity task);
 

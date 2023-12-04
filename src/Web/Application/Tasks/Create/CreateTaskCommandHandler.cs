@@ -39,9 +39,14 @@ namespace DesafioEclipseworks.WebAPI.Application.Tasks.Create
                 return TaskErrors.ProjectWithTaskLimitMaximum(request.ProjectId);
             }
 
+            if (request.Request.DueDate < DateTime.Now)
+            {
+                return TaskErrors.InvalidDueDate;
+            }
+
             TaskEntity newTask = request;
 
-            await _taskRepository.CreateTaskAsync(newTask);
+            await _taskRepository.AddTaskAsync(newTask);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

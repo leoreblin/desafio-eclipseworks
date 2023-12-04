@@ -13,9 +13,10 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public async Task CreateProjectAsync(Project project)
+        public async Task AddProjectAsync(Project project)
         {
             await _context.AddAsync(project);
+            await Task.CompletedTask;
         }
 
         public async Task<List<Project>?> GetAllUserProjectsAsync(Guid userId)

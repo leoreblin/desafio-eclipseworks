@@ -13,7 +13,7 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public async Task CreateTaskAsync(TaskEntity task)
+        public async Task AddTaskAsync(TaskEntity task)
         {
             await _context.AddAsync(task);
         }
@@ -23,13 +23,6 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories
             return await _context.Tasks
                 .AsNoTracking()
                 .Where(t => t.Status == Status.Done)
-                .ToListAsync();
-        }
-
-        public async Task<List<TaskEntity>?> GetAllTasksAsync()
-        {
-            return await _context.Tasks
-                .AsNoTracking()
                 .ToListAsync();
         }
 

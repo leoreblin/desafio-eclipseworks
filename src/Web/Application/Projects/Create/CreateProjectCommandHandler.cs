@@ -31,7 +31,7 @@ namespace DesafioEclipseworks.WebAPI.Application.Projects.Create
 
             Project newProject = new(request.UserId, request.ProjectName);
 
-            await _projectRepository.CreateProjectAsync(newProject);
+            await _projectRepository.AddProjectAsync(newProject);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

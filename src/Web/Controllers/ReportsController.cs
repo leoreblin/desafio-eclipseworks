@@ -1,4 +1,4 @@
-﻿using DesafioEclipseworks.WebAPI.Domain.Services;
+﻿using DesafioEclipseworks.WebAPI.Application.Reports;
 using DesafioEclipseworks.WebAPI.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

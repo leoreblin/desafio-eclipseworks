@@ -12,5 +12,8 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Errors
 
         public static Error TaskDoesNotExist(Guid taskId) =>
             new("Task.Update", $"O ID {taskId} não pertence a nenhuma Tarefa.");
+
+        public static readonly Error InvalidDueDate =
+            new("Task", $"A data de vencimento não pode ser menor que a data atual.");
     }
 }

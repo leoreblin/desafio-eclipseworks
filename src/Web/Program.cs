@@ -1,6 +1,6 @@
 using DesafioEclipseworks.WebAPI.Abstractions.Data;
+using DesafioEclipseworks.WebAPI.Application.Reports;
 using DesafioEclipseworks.WebAPI.Domain.Repositories;
-using DesafioEclipseworks.WebAPI.Domain.Services;
 using DesafioEclipseworks.WebAPI.Infrastructure.Data;
 using DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;

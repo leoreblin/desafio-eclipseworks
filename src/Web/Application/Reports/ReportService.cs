@@ -1,4 +1,5 @@
 ﻿using DesafioEclipseworks.WebAPI.Domain.Entities.Tasks;
+using DesafioEclipseworks.WebAPI.Domain.Entities.Users;
 using DesafioEclipseworks.WebAPI.Domain.Repositories;
 using DesafioEclipseworks.WebAPI.Domain.Shared;
 using DesafioEclipseworks.WebAPI.DTO;
@@ -7,7 +8,7 @@ using PdfSharpCore.Pdf;
 using System.Text;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
 
-namespace DesafioEclipseworks.WebAPI.Domain.Services
+namespace DesafioEclipseworks.WebAPI.Application.Reports
 {
     public class ReportService
     {
@@ -24,7 +25,7 @@ namespace DesafioEclipseworks.WebAPI.Domain.Services
 
         public async Task<Result<byte[]>> GetReportFileAsync(GenerateReportRequest request)
         {
-            if (request.Role != Entities.Users.UserRole.Manager)
+            if (request.Role != UserRole.Manager)
             {
                 return ReportErrors.UserHasNoPermission(request.UserId);
             }
@@ -52,7 +53,7 @@ namespace DesafioEclipseworks.WebAPI.Domain.Services
                 return [];
             }
 
-            var tasksByUser = new List<CompletedTasksByUserDto>();            
+            var tasksByUser = new List<CompletedTasksByUserDto>();
 
             var groupedByUser = updatedTasksOverLast30Days.GroupBy(t => t.UpdatedBy);
             foreach (var group in groupedByUser)
@@ -62,15 +63,15 @@ namespace DesafioEclipseworks.WebAPI.Domain.Services
                 {
                     desiredTasks.AddRange(completedTasks.Where(t => t.Id == item.TaskId && t.Status == Status.Done) ?? []);
                 }
-                
+
                 tasksByUser.Add(new CompletedTasksByUserDto
                 {
                     UserId = group.Key,
                     Count = desiredTasks.Count
-                });               
+                });
             }
 
-            return tasksByUser;         
+            return tasksByUser;
         }
 
         private static string GetHtmlContent(Guid managerId, List<CompletedTasksByUserDto> tasks)

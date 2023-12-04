@@ -51,7 +51,8 @@ namespace DesafioEclipseworks.WebAPI.Infrastructure.Data
                 return;
             }
 
-            Project project = new(_managerUserId, "Projeto Inicial") { Id = _defaultProjectId };
+            Project project = new(_managerUserId, "Projeto Inicial");
+            project.Id = _defaultProjectId;
 
             await context.Projects.AddAsync(project);
         }
