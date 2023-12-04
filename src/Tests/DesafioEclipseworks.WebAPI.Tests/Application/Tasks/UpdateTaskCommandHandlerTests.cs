@@ -3,8 +3,6 @@ using DesafioEclipseworks.WebAPI.Domain.Entities.Tasks;
 using DesafioEclipseworks.WebAPI.Infrastructure.Errors;
 using DesafioEclipseworks.WebAPI.Tests.Mocks;
 using FluentAssertions;
-using Moq;
-using System.Threading.Tasks;
 
 namespace DesafioEclipseworks.WebAPI.Tests.Application.Tasks
 {

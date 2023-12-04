@@ -1,15 +1,7 @@
-using DesafioEclipseworks.WebAPI.Abstractions.Data;
-using DesafioEclipseworks.WebAPI.Application.Reports;
-using DesafioEclipseworks.WebAPI.Domain.Repositories;
+using DesafioEclipseworks.WebAPI.Extensions;
 using DesafioEclipseworks.WebAPI.Infrastructure.Data;
-using DesafioEclipseworks.WebAPI.Infrastructure.Data.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
@@ -20,33 +12,13 @@ IConfiguration configuration = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = "Desafio Eclipseworks Web API",
-        Version = "v1",
-        Description = "Eclispseworks RESTful API"
-    });
-});
-
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
-builder.Services.AddControllers();
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlServer(configuration["ConnectionString"]);
-});
-
 builder.Services
-    .AddTransient<IProjectRepository, ProjectRepository>()
-    .AddTransient<ITaskRepository, TaskRepository>()
-    .AddTransient<ITaskUpdateHistoryRepository, TaskUpdateHistoryRepository>()
-    .AddTransient<IUnitOfWork, UnitOfWork>()
-    .AddScoped<ReportService>();
+    .AddEndpointsApiExplorer()
+    .AddSwagger()
+    .AddMediatR()
+    .AddDbContext(configuration)
+    .AddDI()
+    .AddControllers();
 
 var app = builder.Build();
 
