@@ -35,7 +35,7 @@
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "8081",
         "ASPNETCORE_HTTP_PORTS": "8080",
-		"ConnectionString": "Server=sql_server2022;Initial Catalog=eclipseworksapi-db;User Id=SA;Password=password;MultipleActiveResultSets=true"
+		"ConnectionString": "Server=sql_server2019;Initial Catalog=eclipseworksapi-db;User Id=SA;Password=password;MultipleActiveResultSets=true"
       },
       "publishAllPorts": true,
       "useSSL": true
