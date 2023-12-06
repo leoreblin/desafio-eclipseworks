@@ -64,7 +64,7 @@ Se aplicável, podemos desconsiderar o padrão monolito e dividi-lo em microsser
 ---
 Implementação de estratégias de cache para melhorar performance e garantir proteção a grandes gargalos de conexão ao banco de dados, ou seja, utilizar alguma ferramenta de in-memoring cache (como Redis, por exemplo) para salvar dados genéricos utilizados com maior frequência, evitando requisições no banco de dados.
 
-### Logging e Observabilidade
+### Logging e Monitoramento
 ---
 Implementação de soluções de logs (pode ser ILogger). Utilização de ferramentas como o Azure Application Insights ou AWS CloudWatch para ajudar no rastreio de erros, padrões de uso etc.
 
