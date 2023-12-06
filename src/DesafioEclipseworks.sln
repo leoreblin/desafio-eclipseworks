@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioEclipseworks.WebAPI", "Web\DesafioEclipseworks.WebAPI.csproj", "{EB1F0DBB-F85E-41C7-91EF-B84174ABC218}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioEclipseworks.WebAPI.Tests", "Tests\DesafioEclipseworks.WebAPI.Tests\DesafioEclipseworks.WebAPI.Tests.csproj", "{20F5FCE3-5328-404E-AD9E-8D4A023812A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB1F0DBB-F85E-41C7-91EF-B84174ABC218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB1F0DBB-F85E-41C7-91EF-B84174ABC218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB1F0DBB-F85E-41C7-91EF-B84174ABC218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB1F0DBB-F85E-41C7-91EF-B84174ABC218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20F5FCE3-5328-404E-AD9E-8D4A023812A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20F5FCE3-5328-404E-AD9E-8D4A023812A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20F5FCE3-5328-404E-AD9E-8D4A023812A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20F5FCE3-5328-404E-AD9E-8D4A023812A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F40CF6FB-84A7-4320-AE4F-461FEFF1C490}
+	EndGlobalSection
+EndGlobal
